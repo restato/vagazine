@@ -42,6 +42,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
             renderItem={({ item }) => (
               <View>
                 <Text>{item.title}</Text>
+                <Text>{item.price}</Text>
                 <Text>{item.url}</Text>
                 <Image source={item.imageUrl}
                        style={{width: 400, height: 400}} />
