@@ -19,6 +19,22 @@ def coupang(url):
             'title': title,
             'price': price}
 
+def naver_smartstore(url):
+    # brand store = smart_store
+    headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36"}
+    response = requests.get(url, headers=headers)
+    response.raise_for_status()
+    soup = BeautifulSoup(response.content, 'html.parser')
+    # image_url
+    image_url = soup.find("div", class_="_23RpOU6xpc").find("img").get("src")
+    # price
+    price = soup.find_all("span", class_="_1LY7DqCnwR")[1].text + "원"
+    # title
+    title = soup.find("div", class_="CxNYUPvHfB").find("h3").text
+    return {'imageUrl': image_url,
+            'title': title,
+            'price': price}
+
 def naver_catalog(url):
     headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36"}
     response = requests.get(url, headers=headers)
@@ -34,5 +50,3 @@ def naver_catalog(url):
     return {'imageUrl': image_url,
             'title': title,
             'price': price}
-
-
