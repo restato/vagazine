@@ -3,6 +3,7 @@ from typing import Optional
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
+from util import scrap
 
 app = FastAPI()
 origins = [
@@ -20,6 +21,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 class Item(BaseModel):
     name: str
     price: float
@@ -27,10 +29,17 @@ class Item(BaseModel):
 
 @app.get("/")
 def read_root():
-    return [{"id": 1, "name": "도마",
-            "imageUrl": "https://shopping-phinf.pstatic.net/main_2867953/28679532555.20210908134006.jpg?type=f640"},
-            {"id": 2, "name": "도마2",
-            "imageUrl": "https://shopping-phinf.pstatic.net/main_2276628/22766289732.20210615105435.jpg?type=f640"}]
+    urls = ['https://link.coupang.com/re/CSHARESDP?lptag=CFM60714948&pageKey=5585680852&itemId=119183238&vendorItemId=324094168',
+            'https://link.coupang.com/re/CSHARESDP?lptag=CFM60714948&pageKey=59780&itemId=557613526&vendorItemId=4464944239',
+            'https://link.coupang.com/re/CSHARESDP?lptag=CFM60714948&pageKey=18188945&itemId=73212309&vendorItemId=3119796648',
+            'https://link.coupang.com/re/CSHARESDP?lptag=CFM60714948&pageKey=18188945&itemId=73212309&vendorItemId=3119796648']
+    results = []
+    for idx, url in enumerate(urls):
+        result = scrap.coupang(url)
+        result['id'] = idx
+        result['url'] = url
+        results.append(result)
+    return  results
 
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: Optional[str] = None):

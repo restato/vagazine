@@ -41,7 +41,8 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
             keyExtractor={({ id }, index) => id}
             renderItem={({ item }) => (
               <View>
-                <Text>{item.name}</Text>
+                <Text>{item.title}</Text>
+                <Text>{item.url}</Text>
                 <Image source={item.imageUrl}
                        style={{width: 400, height: 400}} />
               </View>
