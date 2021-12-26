@@ -1,3 +1,25 @@
+
+### Getting Started
+
+
+```sh
+uvicorn main:app --reload
+
+
+```
+
+### Heroku
+
+```sh
+$ brew tap heroku/brew && brew install heroku
+# heroku create # 사이트에서 만들면 할필요 없음
+$ heroku git:remote -a vagazine
+
+git add .
+git commit -am "make it better"
+git push heroku master
+```
+
 # COUPANG
 
 * 리워드

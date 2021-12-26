@@ -7,13 +7,13 @@ from models import Item
 
 app = FastAPI()
 origins = [
-    "http://localhost.tiangolo.com",
-    "https://localhost.tiangolo.com",
     "http://localhost",
     "http://localhost:8000",
+    "http://localhost:3000",
     "http://localhost:19006",
     "http://localhost:19000",
     "http://localhost:65340",
+    "https://vagazine.netlify.app/"
 ]
 
 app.add_middleware(
@@ -26,7 +26,7 @@ app.add_middleware(
 
 @app.get("/ping")
 def ping():
-    return 'ping'
+    return 'poing'
 
 @app.get("/items")
 def read_items():
