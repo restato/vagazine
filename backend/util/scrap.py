@@ -7,7 +7,6 @@ def do(url):
     response = requests.get(url, headers=headers)
     response.raise_for_status()
     soup = BeautifulSoup(response.content, 'html.parser')
-
     if 'coupang' in url:
         result = _coupang(soup)
     elif 'catalog' in url:
