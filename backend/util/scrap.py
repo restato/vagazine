@@ -2,13 +2,21 @@ import requests
 from bs4 import BeautifulSoup
 import urllib.request
 
-
-def coupang(url):
+def do(url):
     headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36"}
     response = requests.get(url, headers=headers)
     response.raise_for_status()
-
     soup = BeautifulSoup(response.content, 'html.parser')
+
+    if 'coupang' in url:
+        result = _coupang(soup)
+    elif 'catalog' in url:
+        result = _naver_catalog(soup)
+    elif 'smartstore' in url or 'brand':
+        result = _naver_smartstore(soup)
+    return result
+
+def _coupang(soup):
     # image_url
     image_url = f'http:{soup.find("img", class_="prod-image__detail").get("src")}'
     # title
@@ -19,12 +27,8 @@ def coupang(url):
             'title': title,
             'price': price}
 
-def naver_smartstore(url):
+def _naver_smartstore(soup):
     # brand store = smart_store
-    headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36"}
-    response = requests.get(url, headers=headers)
-    response.raise_for_status()
-    soup = BeautifulSoup(response.content, 'html.parser')
     # image_url
     image_url = soup.find("div", class_="_23RpOU6xpc").find("img").get("src")
     # price
@@ -35,11 +39,7 @@ def naver_smartstore(url):
             'title': title,
             'price': price}
 
-def naver_catalog(url):
-    headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36"}
-    response = requests.get(url, headers=headers)
-    response.raise_for_status()
-    soup = BeautifulSoup(response.content, 'html.parser')
+def _naver_catalog(soup):
     # image_url
     image_url = soup.find("div", class_="image_thumb__20xyr").find("img").get('src')
     # price

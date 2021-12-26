@@ -40,12 +40,7 @@ def read_root():
             ]
     results = []
     for idx, url in enumerate(urls):
-        if 'coupang' in url:
-            result = scrap.coupang(url)
-        elif 'catalog' in url:
-            result = scrap.naver_catalog(url)
-        elif 'smartstore' in url or 'brand':
-            result = scrap.naver_smartstore(url)
+        result = scrap.do(url)
         result['id'] = idx
         result['url'] = url
         results.append(result)
