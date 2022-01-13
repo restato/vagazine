@@ -3,7 +3,7 @@ from typing import Optional
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from util import scrap
-from models import Item
+from app.models import Item
 
 app = FastAPI()
 origins = [
@@ -26,7 +26,7 @@ app.add_middleware(
 
 @app.get("/ping")
 def ping():
-    return 'poing'
+    return 'pong'
 
 @app.get("/items")
 def read_items():

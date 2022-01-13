@@ -1,23 +1,28 @@
 
 ### Getting Started
 
+```
+https://dongsan.club
+```
 
 ```sh
 uvicorn main:app --reload
-
-
+# uvicorn src.main:app --reload # 프로젝트가 src/main.py 라면
 ```
 
-### Heroku
+### Heroku에 배포하기
+
+* 프로젝트 ROOT에 Procfile, requirements.txt, runtime.txt 파일이 존재해야 한다.
+* 단, 외국에 호스트가 있어 만약 국내 서비스 조회를 통한 (=스크랩)을 한다면 동작하지 않는다. 
 
 ```sh
-$ brew tap heroku/brew && brew install heroku
+$ brew tap heroku/brew && brew install herokuit add .
+$ git commit -am "make it better"
+$ git push heroku master
 # heroku create # 사이트에서 만들면 할필요 없음
-$ heroku git:remote -a vagazine
-
-git add .
-git commit -am "make it better"
-git push heroku master
+$ git init
+$ heroku git:remote -a vagazine # origin, heroku
+$ heroku logs --tail # 로그 확인
 ```
 
 # COUPANG
