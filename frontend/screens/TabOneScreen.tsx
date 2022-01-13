@@ -17,7 +17,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
 
 
       // const url = 'https://reactnative.dev/movies.json';
-      const url = 'http://122.32.196.201:8000/items';
+      const url = 'https://dongsan.club/items';
       const response = await fetch(url);
       const json = await response.json();
       setData(json) // json.movies
