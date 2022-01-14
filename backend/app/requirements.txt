@@ -3,3 +3,5 @@ fastapi==0.70.1
 pydantic==1.8.2
 requests==2.26.0
 uvicorn==0.16.0
+fastapi-redis-cache==0.2.5
+SQLAlchemy==1.4.29

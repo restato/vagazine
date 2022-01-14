@@ -1,19 +1,29 @@
+import os
+import logging
 from typing import Optional
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI, Request, Response
+from fastapi_redis_cache import FastApiRedisCache, cache
+from sqlalchemy.orm import Session
+
 from util import scrap
 from app.models import Item
 
-app = FastAPI()
+LOCAL_REDIS_URL = "redis://redis:6379"
+# LOCAL_REDIS_URL = "redis://127.0.0.1:6379"
+logger = logging.getLogger(__name__)
+app = FastAPI(title='vagazine')
+
 origins = [
-    "http://localhost",
-    "http://localhost:8000",
-    "http://localhost:3000",
-    "http://localhost:19006",
-    "http://localhost:19000",
-    "http://localhost:65340",
-    "https://vagazine.netlify.app/"
+    '*'
+    # "http://localhost",
+    # "http://localhost:8000",
+    # "http://localhost:3000",
+    # "http://localhost:19006",
+    # "http://localhost:19000",
+    # "http://localhost:65340",
+    # "https://vagazine.netlify.app/"
 ]
 
 app.add_middleware(
@@ -28,7 +38,18 @@ app.add_middleware(
 def ping():
     return 'pong'
 
+@app.on_event("startup")
+def startup():
+    redis_cache = FastApiRedisCache()
+    redis_cache.init(
+        host_url=os.environ.get("REDIS_URL", LOCAL_REDIS_URL),
+        prefix="myapi-cache",
+        response_header="X-MyAPI-Cache",
+        ignore_arg_types=[Request, Response, Session]
+    )
+
 @app.get("/items")
+@cache(expire=30)
 def read_items():
     urls = ['https://link.coupang.com/re/CSHARESDP?lptag=CFM60714948&pageKey=5585680852&itemId=119183238&vendorItemId=324094168',
             'https://link.coupang.com/re/CSHARESDP?lptag=CFM60714948&pageKey=59780&itemId=557613526&vendorItemId=4464944239',
@@ -45,6 +66,7 @@ def read_items():
         item['id'] = idx
         item['url'] = url
         items.append(item)
+    print('end')
     return items
 
 @app.get("/items/{item_id}")
