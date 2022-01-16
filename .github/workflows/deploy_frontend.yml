@@ -12,13 +12,14 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: beta
+      - run: cd frontend
       - run: flutter config --enable-web
       - run: flutter build web
 
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1.2
         with:
-          publish-dir: './build/web'
+          publish-dir: 'frontend/build/web'
           production-branch: main
           github-token: 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
           deploy-message: "Deploy from GitHub Actions"
