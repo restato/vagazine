@@ -75,7 +75,7 @@ class GridListDemo extends StatelessWidget {
                     itemCount: resData != null ? resData.length : 0,
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
+                      crossAxisCount: 2,
                     ),
                     itemBuilder: (context, index) {
                       Item item = resData![index];
