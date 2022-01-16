@@ -146,7 +146,7 @@ class _MyAppState extends State<MyApp> {
                             ),
                           ),
                           title: Text(resData?[index].title ?? ""),
-                          subtitle: Text(resData?[index].title ?? ""),
+                          subtitle: Text(resData?[index].price ?? ""),
                         ),
                       );
                     });
