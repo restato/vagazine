@@ -49,7 +49,7 @@ def startup():
     )
 
 @app.get("/items")
-@cache(expire=30)
+@cache(expire=60)
 def read_items():
     urls = ['https://link.coupang.com/re/CSHARESDP?lptag=CFM60714948&pageKey=5585680852&itemId=119183238&vendorItemId=324094168',
             'https://link.coupang.com/re/CSHARESDP?lptag=CFM60714948&pageKey=59780&itemId=557613526&vendorItemId=4464944239',
