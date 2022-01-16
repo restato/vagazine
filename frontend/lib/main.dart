@@ -1,198 +1,202 @@
-// import 'package:flutter/material.dart';
-// import 'vagazine/app.dart';
-
-// void main() => runApp(const VagazineApp());
-import 'dart:async';
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+// import 'vagazine/app.dart';
+// void main() => runApp(const VagazineApp());
+import 'vagazine/grid_list.dart';
 
-class Item {
-  final int id;
-  final String title;
-  final String price;
-  final String imageUrl;
+void main() => runApp(const GridListDemo());
 
-  Item({
-    required this.id,
-    required this.title,
-    required this.price,
-    required this.imageUrl,
-  });
+// import 'dart:async';
+// import 'dart:convert';
+// import 'dart:html';
 
-  factory Item.fromJson(Map<String, dynamic> json) {
-    return Item(
-      id: json['id'],
-      title: json['title'],
-      price: json['price'],
-      imageUrl: json['imageUrl'],
-    );
-  }
-}
+// import 'package:flutter/material.dart';
+// import 'package:http/http.dart' as http;
 
-Future<List<Item>> fetchItems() async {
-  final response = await http.get(Uri.parse('https://dongsan.club/items'));
-  if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
-    List<Item> items = [];
-    List<dynamic> itemsJson = jsonDecode(response.body);
-    itemsJson.forEach(
-      (oneItem) {
-        Item item = Item.fromJson(oneItem);
-        items.add(item);
-      },
-    );
-    return items;
-  } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
-    throw Exception('Failed to load album');
-  }
-}
+// class Item {
+//   final int id;
+//   final String title;
+//   final String price;
+//   final String imageUrl;
 
-Future<List<Album>> fetchAlbums() async {
-  final response =
-      await http.get(Uri.parse('https://jsonplaceholder.typicode.com/albums'));
+//   Item({
+//     required this.id,
+//     required this.title,
+//     required this.price,
+//     required this.imageUrl,
+//   });
 
-  if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
-    List<Album> albums = [];
-    List<dynamic> albumsJson = jsonDecode(response.body);
-    albumsJson.forEach(
-      (oneAlbum) {
-        Album album = Album.fromJson(oneAlbum);
-        albums.add(album);
-      },
-    );
-    return albums;
-  } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
-    throw Exception('Failed to load album');
-  }
-}
+//   factory Item.fromJson(Map<String, dynamic> json) {
+//     return Item(
+//       id: json['id'],
+//       title: json['title'],
+//       price: json['price'],
+//       imageUrl: json['imageUrl'],
+//     );
+//   }
+// }
 
-class Album {
-  final int userId;
-  final int id;
-  final String title;
+// Future<List<Item>> fetchItems() async {
+//   final response = await http.get(Uri.parse('https://dongsan.club/items'));
+//   if (response.statusCode == 200) {
+//     // If the server did return a 200 OK response,
+//     // then parse the JSON.
+//     List<Item> items = [];
+//     List<dynamic> itemsJson = jsonDecode(response.body);
+//     itemsJson.forEach(
+//       (oneItem) {
+//         Item item = Item.fromJson(oneItem);
+//         items.add(item);
+//       },
+//     );
+//     return items;
+//   } else {
+//     // If the server did not return a 200 OK response,
+//     // then throw an exception.
+//     throw Exception('Failed to load album');
+//   }
+// }
 
-  Album({
-    required this.userId,
-    required this.id,
-    required this.title,
-  });
+// Future<List<Album>> fetchAlbums() async {
+//   final response =
+//       await http.get(Uri.parse('https://jsonplaceholder.typicode.com/albums'));
 
-  factory Album.fromJson(Map<String, dynamic> json) {
-    return Album(
-      userId: json['userId'],
-      id: json['id'],
-      title: json['title'],
-    );
-  }
-}
+//   if (response.statusCode == 200) {
+//     // If the server did return a 200 OK response,
+//     // then parse the JSON.
+//     List<Album> albums = [];
+//     List<dynamic> albumsJson = jsonDecode(response.body);
+//     albumsJson.forEach(
+//       (oneAlbum) {
+//         Album album = Album.fromJson(oneAlbum);
+//         albums.add(album);
+//       },
+//     );
+//     return albums;
+//   } else {
+//     // If the server did not return a 200 OK response,
+//     // then throw an exception.
+//     throw Exception('Failed to load album');
+//   }
+// }
 
-void main() => runApp(const MyApp());
+// class Album {
+//   final int userId;
+//   final int id;
+//   final String title;
 
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+//   Album({
+//     required this.userId,
+//     required this.id,
+//     required this.title,
+//   });
 
-  @override
-  _MyAppState createState() => _MyAppState();
-}
+//   factory Album.fromJson(Map<String, dynamic> json) {
+//     return Album(
+//       userId: json['userId'],
+//       id: json['id'],
+//       title: json['title'],
+//     );
+//   }
+// }
 
-class _MyAppState extends State<MyApp> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Vagazine',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () {},
-          ),
-          title: const Text('Vagazine'),
-          // actions: [
-          //   IconButton(
-          //     tooltip: 'help',
-          //     icon: const Icon(
-          //       Icons.favorite,
-          //     ),
-          //     onPressed: () {},
-          //   ),
-          //   IconButton(
-          //     icon: const Icon(
-          //       Icons.search,
-          //     ),
-          //     onPressed: () {},
-          //   ),
-          //   PopupMenuButton<Text>(
-          //     itemBuilder: (context) {
-          //       return [
-          //         PopupMenuItem(
-          //           child: Text(''),
-          //         ),
-          //         PopupMenuItem(
-          //           child: Text(''),
-          //         ),
-          //         PopupMenuItem(
-          //           child: Text(''),
-          //         ),
-          //       ];
-          //     },
-          //   )
-          // ],
-        ),
-        body: Center(
-          // child: FutureBuilder<List<Album>>(
-          child: FutureBuilder<List<Item>>(
-            future: fetchItems(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                // List<Album>? resData = snapshot.data;
-                List<Item>? resData = snapshot.data;
-                return ListView.builder(
-                    itemCount: resData != null ? resData.length : 0,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        child: ListTile(
-                          // FlutterLogo(size: 56.0), 'https://picsum.photos/250?image=9'
-                          // leading:
-                          //     Image.network(resData?[index].imageUrl ?? ""),
-                          leading: GestureDetector(
-                            behavior: HitTestBehavior.translucent,
-                            onTap: () {},
-                            child: Container(
-                              width: 48,
-                              height: 48,
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 4.0),
-                              alignment: Alignment.center,
-                              child: Image.network(resData?[index].imageUrl ??
-                                  ""), // const CircleAvatar(),
-                            ),
-                          ),
-                          title: Text(resData?[index].title ?? ""),
-                          subtitle: Text(resData?[index].price ?? ""),
-                        ),
-                      );
-                    });
-              } else if (snapshot.hasError) {
-                return Text('${snapshot.error}');
-              }
-              // By default, show a loading spinner.
-              return const CircularProgressIndicator();
-            },
-          ),
-        ),
-      ),
-    );
-  }
-}
+// void main() => runApp(const MyApp());
+
+// class MyApp extends StatefulWidget {
+//   const MyApp({Key? key}) : super(key: key);
+
+//   @override
+//   _MyAppState createState() => _MyAppState();
+// }
+
+// class _MyAppState extends State<MyApp> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Vagazine',
+//       theme: ThemeData(
+//         primarySwatch: Colors.blue,
+//       ),
+//       home: Scaffold(
+//         appBar: AppBar(
+//           leading: IconButton(
+//             icon: const Icon(Icons.menu),
+//             onPressed: () {},
+//           ),
+//           title: const Text('Vagazine'),
+//           // actions: [
+//           //   IconButton(
+//           //     tooltip: 'help',
+//           //     icon: const Icon(
+//           //       Icons.favorite,
+//           //     ),
+//           //     onPressed: () {},
+//           //   ),
+//           //   IconButton(
+//           //     icon: const Icon(
+//           //       Icons.search,
+//           //     ),
+//           //     onPressed: () {},
+//           //   ),
+//           //   PopupMenuButton<Text>(
+//           //     itemBuilder: (context) {
+//           //       return [
+//           //         PopupMenuItem(
+//           //           child: Text(''),
+//           //         ),
+//           //         PopupMenuItem(
+//           //           child: Text(''),
+//           //         ),
+//           //         PopupMenuItem(
+//           //           child: Text(''),
+//           //         ),
+//           //       ];
+//           //     },
+//           //   )
+//           // ],
+//         ),
+//         body: Center(
+//           // child: FutureBuilder<List<Album>>(
+//           child: FutureBuilder<List<Item>>(
+//             future: fetchItems(),
+//             builder: (context, snapshot) {
+//               if (snapshot.hasData) {
+//                 // List<Album>? resData = snapshot.data;
+//                 List<Item>? resData = snapshot.data;
+//                 return ListView.builder(
+//                     itemCount: resData != null ? resData.length : 0,
+//                     itemBuilder: (context, index) {
+//                       return Card(
+//                         child: ListTile(
+//                           // FlutterLogo(size: 56.0), 'https://picsum.photos/250?image=9'
+//                           // leading:
+//                           //     Image.network(resData?[index].imageUrl ?? ""),
+//                           leading: GestureDetector(
+//                             behavior: HitTestBehavior.translucent,
+//                             onTap: () {},
+//                             child: Container(
+//                               width: 48,
+//                               height: 48,
+//                               padding:
+//                                   const EdgeInsets.symmetric(vertical: 4.0),
+//                               alignment: Alignment.center,
+//                               child: Image.network(resData?[index].imageUrl ??
+//                                   ""), // const CircleAvatar(),
+//                             ),
+//                           ),
+//                           title: Text(resData?[index].title ?? ""),
+//                           subtitle: Text(resData?[index].price ?? ""),
+//                         ),
+//                       );
+//                     });
+//               } else if (snapshot.hasError) {
+//                 return Text('${snapshot.error}');
+//               }
+//               // By default, show a loading spinner.
+//               return const CircularProgressIndicator();
+//             },
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
