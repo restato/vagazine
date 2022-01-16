@@ -66,7 +66,12 @@ class GridListDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: FutureBuilder<List<Item>>(
+      title: 'Vagazine',
+      theme: ThemeData(primarySwatch: Colors.indigo),
+      home: Scaffold(
+        appBar: AppBar(title: const Text('Vagazine')),
+        body: Center(
+          child: FutureBuilder<List<Item>>(
             future: fetchItems(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
@@ -82,24 +87,14 @@ class GridListDemo extends StatelessWidget {
                       return _GridPhotoItem(item: item);
                     });
               } else if (snapshot.hasError) {
-                return Text("err");
+                return Text('${snapshot.error}');
               }
               return const CircularProgressIndicator();
-            })
-        // home: GridView.count(
-        //     restorationId: 'grid_view_demo_grid_offset',
-        //     crossAxisCount: 2,
-        //     mainAxisSpacing: 8,
-        //     crossAxisSpacing: 8,
-        //     padding: const EdgeInsets.all(8),
-        //     childAspectRatio: 1,
-        // children: _photos(context).map<Widget>((photo) {
-        //   return _GridPhotoItem(photo: photo);
-        // }).toList(),
-        // children: FutureBuilder<List<Item>>(
-        // builder: (context, snapshot) {},
-        // )),
-        );
+            },
+          ),
+        ),
+      ),
+    );
   }
 }
 
