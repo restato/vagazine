@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 class Item {
   final int id;
   final String title;
+  final String url;
   final String price;
   final String imageUrl;
 
   Item({
     required this.id,
     required this.title,
+    required this.url,
     required this.price,
     required this.imageUrl,
   });
@@ -19,6 +22,7 @@ class Item {
     return Item(
       id: json['id'],
       title: json['title'],
+      url: json['url'],
       price: json['price'],
       imageUrl: json['imageUrl'],
     );
@@ -43,6 +47,14 @@ Future<List<Item>> fetchItems() async {
     // If the server did not return a 200 OK response,
     // then throw an exception.
     throw Exception('Failed to load album');
+  }
+}
+
+launchURL(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url, forceWebView: true);
+  } else {
+    throw 'Could not launch $url';
   }
 }
 
@@ -81,10 +93,16 @@ class GridListDemo extends StatelessWidget {
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
+                      crossAxisSpacing: 5.0,
+                      mainAxisSpacing: 5.0,
                     ),
                     itemBuilder: (context, index) {
                       Item item = resData![index];
-                      return _GridPhotoItem(item: item);
+                      return GestureDetector(
+                          onTap: () {
+                            launchURL(item.url);
+                          },
+                          child: _GridPhotoItem(item: item));
                     });
               } else if (snapshot.hasError) {
                 return Text('${snapshot.error}');
