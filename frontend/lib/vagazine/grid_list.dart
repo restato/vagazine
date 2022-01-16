@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class Item {
   final int id;
@@ -60,6 +61,8 @@ launchURL(String url) async {
 
 class GridListDemo extends StatelessWidget {
   const GridListDemo({Key? key}) : super(key: key);
+  // Future<List<Item>> futureItems;
+
   List<_Photo> _photos(BuildContext context) {
     return [
       _Photo(
@@ -75,6 +78,43 @@ class GridListDemo extends StatelessWidget {
     ];
   }
 
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   futureItems = fetchItems();
+  // }
+
+  // Future<void> _pullRefresh() async {
+  //   List<Item> freshItems = await fetchItems();
+  //   setState(() {
+  //     futureItems = Future.value(freshItems);
+  //   });
+  // }
+
+  Widget _gridView(AsyncSnapshot snapshot) {
+    if (snapshot.hasData) {
+      List<Item>? resData = snapshot.data;
+      return GridView.builder(
+          itemCount: resData != null ? resData.length : 0,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 5.0,
+            mainAxisSpacing: 5.0,
+          ),
+          itemBuilder: (context, index) {
+            Item item = resData![index];
+            return GestureDetector(
+                onTap: () {
+                  launchURL(item.url);
+                },
+                child: _GridPhotoItem(item: item));
+          });
+    } else if (snapshot.hasError) {
+      return Text('${snapshot.error}');
+    }
+    return const CircularProgressIndicator();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -86,28 +126,7 @@ class GridListDemo extends StatelessWidget {
           child: FutureBuilder<List<Item>>(
             future: fetchItems(),
             builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                List<Item>? resData = snapshot.data;
-                return GridView.builder(
-                    itemCount: resData != null ? resData.length : 0,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 5.0,
-                      mainAxisSpacing: 5.0,
-                    ),
-                    itemBuilder: (context, index) {
-                      Item item = resData![index];
-                      return GestureDetector(
-                          onTap: () {
-                            launchURL(item.url);
-                          },
-                          child: _GridPhotoItem(item: item));
-                    });
-              } else if (snapshot.hasError) {
-                return Text('${snapshot.error}');
-              }
-              return const CircularProgressIndicator();
+              return _gridView(snapshot);
             },
           ),
         ),
