@@ -114,7 +114,41 @@ class _MyAppState extends State<MyApp> {
       ),
       home: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () {},
+          ),
           title: const Text('Vagazine'),
+          // actions: [
+          //   IconButton(
+          //     tooltip: 'help',
+          //     icon: const Icon(
+          //       Icons.favorite,
+          //     ),
+          //     onPressed: () {},
+          //   ),
+          //   IconButton(
+          //     icon: const Icon(
+          //       Icons.search,
+          //     ),
+          //     onPressed: () {},
+          //   ),
+          //   PopupMenuButton<Text>(
+          //     itemBuilder: (context) {
+          //       return [
+          //         PopupMenuItem(
+          //           child: Text(''),
+          //         ),
+          //         PopupMenuItem(
+          //           child: Text(''),
+          //         ),
+          //         PopupMenuItem(
+          //           child: Text(''),
+          //         ),
+          //       ];
+          //     },
+          //   )
+          // ],
         ),
         body: Center(
           // child: FutureBuilder<List<Album>>(
