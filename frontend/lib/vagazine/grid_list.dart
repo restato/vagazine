@@ -5,8 +5,16 @@ class GridListDemo extends StatelessWidget {
 
   List<_Photo> _photos(BuildContext context) {
     return [
-      _Photo(assetName: 'images/lake.jpg', title: 'hi', subtitle: 'bye'),
-      _Photo(assetName: 'images/lake.jpg', title: 'hi', subtitle: 'bye'),
+      _Photo(
+          imageUrl:
+              'http://thumbnail10.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/241314894070500-c2b90551-d723-41df-9f3f-8f4c541abdc3.jpg',
+          title: 'hi',
+          subtitle: 'bye'),
+      _Photo(
+          imageUrl:
+              'http://thumbnail10.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/241314894070500-c2b90551-d723-41df-9f3f-8f4c541abdc3.jpg',
+          title: 'hi',
+          subtitle: 'bye'),
     ];
   }
 
@@ -29,12 +37,12 @@ class GridListDemo extends StatelessWidget {
 }
 
 class _Photo {
-  final String assetName;
+  final String imageUrl;
   final String title;
   final String subtitle;
 
   _Photo({
-    required this.assetName,
+    required this.imageUrl,
     required this.title,
     required this.subtitle,
   });
@@ -67,8 +75,8 @@ class _GridPhotoItem extends StatelessWidget {
     final Widget image = Material(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
       clipBehavior: Clip.antiAlias,
-      child: Image.asset(
-        photo.assetName,
+      child: Image.network(
+        photo.imageUrl,
         fit: BoxFit.cover,
       ),
     );
