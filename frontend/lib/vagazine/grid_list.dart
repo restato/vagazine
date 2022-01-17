@@ -4,32 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-
-class Item {
-  final int id;
-  final String title;
-  final String url;
-  final String price;
-  final String imageUrl;
-
-  Item({
-    required this.id,
-    required this.title,
-    required this.url,
-    required this.price,
-    required this.imageUrl,
-  });
-
-  factory Item.fromJson(Map<String, dynamic> json) {
-    return Item(
-      id: json['id'],
-      title: json['title'],
-      url: json['url'],
-      price: json['price'],
-      imageUrl: json['imageUrl'],
-    );
-  }
-}
+import '../models/item.dart';
 
 Future<List<Item>> fetchItems() async {
   final response = await http.get(Uri.parse('https://dongsan.club/items'));
