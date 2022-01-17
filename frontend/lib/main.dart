@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 // import 'vagazine/app.dart';
 // void main() => runApp(const VagazineApp());
-import 'vagazine/grid_list.dart';
 
-void main() => runApp(const GridListDemo());
+// import 'vagazine/grid_list.dart';
+// void main() => runApp(const GridListDemo());
+import 'vagazine/motion.dart';
+
+void main() => runApp(MaterialApp(
+      title: 'vagazine',
+      home: const OpenContainerTransformDemo(),
+    ));
 
 // import 'dart:async';
 // import 'dart:convert';
