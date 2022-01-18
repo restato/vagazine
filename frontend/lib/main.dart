@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 // import 'vagazine/app.dart';
 // void main() => runApp(const VagazineApp());
 
@@ -6,10 +7,12 @@ import 'package:flutter/material.dart';
 // void main() => runApp(const GridListDemo());
 import 'vagazine/motion.dart';
 import 'screens/home.dart';
+import 'themes/light.theme.dart';
 
 void main() => runApp(MaterialApp(
       title: 'vagazine',
       home: const Home(),
+      theme: lightTheme(),
     ));
 
 // import 'dart:async';
