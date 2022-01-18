@@ -13,6 +13,14 @@ class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final Widget image = Material(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      clipBehavior: Clip.antiAlias,
+      child: Image.network(
+        item.imageUrl,
+        fit: BoxFit.cover,
+      ),
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -21,10 +29,10 @@ class DetailPage extends StatelessWidget {
       body: ListView(
         children: [
           Container(
-            color: Colors.black38,
+            // color: Colors.black38,
             child: Padding(
               padding: const EdgeInsets.all(70),
-              child: Image.network(item.imageUrl),
+              child: image,
             ),
           ),
           Padding(

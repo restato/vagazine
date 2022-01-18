@@ -53,15 +53,13 @@ class CardList extends StatelessWidget {
           ),
           itemBuilder: (context, index) {
             Item item = resData![index];
-            return Expanded(
-              child: _OpenContainerWrapper(
-                transitionType: _transitionType,
-                item: item,
-                closedBuilder: (context, openContainer) {
-                  return _SmallDetailsCard(
-                      openContainer: openContainer, item: item);
-                },
-              ),
+            return _OpenContainerWrapper(
+              transitionType: _transitionType,
+              item: item,
+              closedBuilder: (context, openContainer) {
+                return _SmallDetailsCard(
+                    openContainer: openContainer, item: item);
+              },
             );
           });
       // return GestureDetector(
@@ -259,6 +257,14 @@ class _SmallDetailsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final Widget image = Material(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+      clipBehavior: Clip.antiAlias,
+      child: Image.network(
+        item.imageUrl,
+        fit: BoxFit.cover,
+      ),
+    );
 
     return _InkWellOverlay(
       openContainer: openContainer,
@@ -266,15 +272,7 @@ class _SmallDetailsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            color: Colors.black38,
-            height: 150,
-            child: Center(
-              child: Image.network(
-                item.imageUrl,
-              ),
-            ),
-          ),
+          GridTile(child: image),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(10),
