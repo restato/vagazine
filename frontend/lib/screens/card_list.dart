@@ -39,13 +39,18 @@ launchURL(String url) async {
 class CardList extends StatelessWidget {
   const CardList({Key? key}) : super(key: key);
 
-  Widget _listView(AsyncSnapshot snapshot) {
+  Widget _gridView(AsyncSnapshot snapshot) {
     ContainerTransitionType _transitionType = ContainerTransitionType.fade;
 
     if (snapshot.hasData) {
       List<Item>? resData = snapshot.data;
-      return ListView.builder(
+      return GridView.builder(
           itemCount: resData != null ? resData.length : 0,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 5.0,
+            mainAxisSpacing: 5.0,
+          ),
           itemBuilder: (context, index) {
             Item item = resData![index];
             return Expanded(
@@ -86,7 +91,7 @@ class CardList extends StatelessWidget {
       child: FutureBuilder<List<Item>>(
         future: fetchItems(),
         builder: (context, snapshot) {
-          return _listView(snapshot);
+          return _gridView(snapshot);
         },
       ),
     );
