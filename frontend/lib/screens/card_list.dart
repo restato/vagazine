@@ -1,87 +1,169 @@
 import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
+import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
+import 'dart:convert';
+
 import '../screens/detail_page.dart';
+import '../models/item.dart';
+
+Future<List<Item>> fetchItems() async {
+  final response = await http.get(Uri.parse('https://dongsan.club/items'));
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    List<Item> items = [];
+    List<dynamic> itemsJson = jsonDecode(response.body);
+    itemsJson.forEach(
+      (oneItem) {
+        Item item = Item.fromJson(oneItem);
+        items.add(item);
+      },
+    );
+    return items;
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  }
+}
+
+launchURL(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url, forceWebView: true);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
 
 class CardList extends StatelessWidget {
-  const CardList();
+  const CardList({Key? key}) : super(key: key);
+
+  Widget _listView(AsyncSnapshot snapshot) {
+    ContainerTransitionType _transitionType = ContainerTransitionType.fade;
+
+    if (snapshot.hasData) {
+      List<Item>? resData = snapshot.data;
+      return ListView.builder(
+          itemCount: resData != null ? resData.length : 0,
+          itemBuilder: (context, index) {
+            Item item = resData![index];
+            return Expanded(
+              child: _OpenContainerWrapper(
+                transitionType: _transitionType,
+                item: item,
+                closedBuilder: (context, openContainer) {
+                  return _SmallDetailsCard(
+                      openContainer: openContainer, item: item);
+                },
+              ),
+            );
+          });
+      // return GestureDetector(
+      //   onTap: () {
+      //     launchURL(item.url);
+      //   },
+      //   child: Expanded(
+      //     child: _OpenContainerWrapper(
+      //       transitionType: _transitionType,
+      //       closedBuilder: (context, openContainer) {
+      //         return _SmallDetailsCard(
+      //             openContainer: openContainer, item: item);
+      //       },
+      //     ),
+      //   ),
+      // ); // _GridPhotoItem(item: item));
+      // });
+    } else if (snapshot.hasError) {
+      return Text('${snapshot.error}');
+    }
+    return const CircularProgressIndicator();
+  }
 
   @override
   Widget build(BuildContext context) {
-    ContainerTransitionType _transitionType = ContainerTransitionType.fade;
+    return Center(
+      child: FutureBuilder<List<Item>>(
+        future: fetchItems(),
+        builder: (context, snapshot) {
+          return _listView(snapshot);
+        },
+      ),
+    );
 
-    return ListView(padding: const EdgeInsets.all(8), children: [
-      Row(
-        children: [
-          Expanded(
-            child: _OpenContainerWrapper(
-              transitionType: _transitionType,
-              closedBuilder: (context, openContainer) {
-                return _SmallDetailsCard(
-                    openContainer: openContainer, subtitle: 'subtitle');
-              },
-            ),
-          ),
-          const SizedBox(
-            width: 8,
-          ),
-          Expanded(
-            child: _OpenContainerWrapper(
-              transitionType: _transitionType,
-              closedBuilder: (context, openContainer) {
-                return _SmallDetailsCard(
-                    openContainer: openContainer, subtitle: 'subtitle');
-              },
-            ),
-          ),
-        ],
-      ),
-      const SizedBox(
-        height: 16,
-      ),
-      Row(
-        children: [
-          Expanded(
-            child: _OpenContainerWrapper(
-              transitionType: _transitionType,
-              closedBuilder: (context, openContainer) {
-                return _SmallDetailsCard(
-                  openContainer: openContainer,
-                  subtitle: 'subtitle',
-                );
-              },
-            ),
-          ),
-          const SizedBox(
-            width: 8,
-          ),
-          Expanded(
-            child: _OpenContainerWrapper(
-              transitionType: _transitionType,
-              closedBuilder: (context, openContainer) {
-                return _SmallDetailsCard(
-                  openContainer: openContainer,
-                  subtitle: 'subtitle',
-                );
-              },
-            ),
-          ),
-          const SizedBox(
-            width: 8,
-          ),
-          Expanded(
-            child: _OpenContainerWrapper(
-              transitionType: _transitionType,
-              closedBuilder: (context, openContainer) {
-                return _SmallDetailsCard(
-                  openContainer: openContainer,
-                  subtitle: 'subtitle',
-                );
-              },
-            ),
-          ),
-        ],
-      )
-    ]);
+    // return ListView(padding: const EdgeInsets.all(8), children: [
+    //   Row(
+    //     children: [
+    //       Expanded(
+    //         child: _OpenContainerWrapper(
+    //           transitionType: _transitionType,
+    //           closedBuilder: (context, openContainer) {
+    //             return _SmallDetailsCard(
+    //                 openContainer: openContainer, subtitle: 'subtitle');
+    //           },
+    //         ),
+    //       ),
+    //       const SizedBox(
+    //         width: 8,
+    //       ),
+    //       Expanded(
+    //         child: _OpenContainerWrapper(
+    //           transitionType: _transitionType,
+    //           closedBuilder: (context, openContainer) {
+    //             return _SmallDetailsCard(
+    //                 openContainer: openContainer, subtitle: 'subtitle');
+    //           },
+    //         ),
+    //       ),
+    //     ],
+    //   ),
+    //   const SizedBox(
+    //     height: 16,
+    //   ),
+    //   Row(
+    //     children: [
+    //       Expanded(
+    //         child: _OpenContainerWrapper(
+    //           transitionType: _transitionType,
+    //           closedBuilder: (context, openContainer) {
+    //             return _SmallDetailsCard(
+    //               openContainer: openContainer,
+    //               subtitle: 'subtitle',
+    //             );
+    //           },
+    //         ),
+    //       ),
+    //       const SizedBox(
+    //         width: 8,
+    //       ),
+    //       Expanded(
+    //         child: _OpenContainerWrapper(
+    //           transitionType: _transitionType,
+    //           closedBuilder: (context, openContainer) {
+    //             return _SmallDetailsCard(
+    //               openContainer: openContainer,
+    //               subtitle: 'subtitle',
+    //             );
+    //           },
+    //         ),
+    //       ),
+    //       const SizedBox(
+    //         width: 8,
+    //       ),
+    //       Expanded(
+    //         child: _OpenContainerWrapper(
+    //           transitionType: _transitionType,
+    //           closedBuilder: (context, openContainer) {
+    //             return _SmallDetailsCard(
+    //               openContainer: openContainer,
+    //               subtitle: 'subtitle',
+    //             );
+    //           },
+    //         ),
+    //       ),
+    //     ],
+    //   )
+    // ]);
   }
 }
 
@@ -89,16 +171,18 @@ class _OpenContainerWrapper extends StatelessWidget {
   const _OpenContainerWrapper({
     required this.closedBuilder,
     required this.transitionType,
+    required this.item,
   });
 
   final CloseContainerBuilder closedBuilder;
   final ContainerTransitionType transitionType;
+  final Item item;
 
   @override
   Widget build(BuildContext context) {
     return OpenContainer<bool>(
       transitionType: transitionType,
-      openBuilder: (context, openContainer) => const DetailPage(title: 'gg'),
+      openBuilder: (context, openContainer) => DetailPage(item: item),
       tappable: false,
       closedBuilder: closedBuilder,
     );
@@ -161,11 +245,11 @@ class _DetailsCard extends StatelessWidget {
 class _SmallDetailsCard extends StatelessWidget {
   const _SmallDetailsCard({
     required this.openContainer,
-    required this.subtitle,
+    required this.item,
   });
 
   final VoidCallback openContainer;
-  final String subtitle;
+  final Item item;
 
   @override
   Widget build(BuildContext context) {
@@ -181,9 +265,8 @@ class _SmallDetailsCard extends StatelessWidget {
             color: Colors.black38,
             height: 150,
             child: Center(
-              child: Image.asset(
-                './images/lake.jpg',
-                width: 80,
+              child: Image.network(
+                item.imageUrl,
               ),
             ),
           ),
@@ -195,14 +278,14 @@ class _SmallDetailsCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'text', // GalleryLocalizations.of(context).demoMotionPlaceholderTitle,
+                    item.title, // GalleryLocalizations.of(context).demoMotionPlaceholderTitle,
                     style: textTheme.headline6,
                   ),
                   const SizedBox(
                     height: 4,
                   ),
                   Text(
-                    subtitle,
+                    item.price,
                     style: textTheme.caption,
                   ),
                 ],

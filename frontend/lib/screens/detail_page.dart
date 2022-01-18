@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import '../models/item.dart';
 
 const String _text = "상세페이지 내용입니다";
 
 class DetailPage extends StatelessWidget {
   const DetailPage({
-    required this.title,
+    required this.item,
   });
 
-  final String title;
+  final Item item;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class DetailPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(item.title),
       ),
       body: ListView(
         children: [
@@ -23,10 +24,7 @@ class DetailPage extends StatelessWidget {
             color: Colors.black38,
             child: Padding(
               padding: const EdgeInsets.all(70),
-              child: const Text("Main Image"),
-              // child: Image.asset(
-              //   './images/lake.jpg',
-              // ),
+              child: Image.network(item.imageUrl),
             ),
           ),
           Padding(
@@ -35,7 +33,7 @@ class DetailPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'text',
+                  item.price,
                   // style: textTheme.headline5.copyWith(
                   //   color: Colors.black54,
                   //   fontSize: 30,
