@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 const String _text = "상세페이지 내용입니다";
 
 class DetailPage extends StatelessWidget {
-  const DetailPage();
+  const DetailPage({
+    required this.title,
+  });
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +15,7 @@ class DetailPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('상세화면'),
+        title: Text(title),
       ),
       body: ListView(
         children: [

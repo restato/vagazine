@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 // import 'vagazine/grid_list.dart';
 // void main() => runApp(const GridListDemo());
 import 'vagazine/motion.dart';
+import 'screens/home.dart';
 
 void main() => runApp(MaterialApp(
       title: 'vagazine',
-      home: const OpenContainerTransformDemo(),
+      home: const Home(),
     ));
 
 // import 'dart:async';
