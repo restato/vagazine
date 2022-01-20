@@ -1,12 +1,45 @@
 import 'themes/app_theme.dart';
 import 'models/homelist.dart';
 import 'package:flutter/material.dart';
+import '../models/item.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:url_launcher/url_launcher.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
+}
+
+Future<List<Item>> fetchItems() async {
+  final response = await http.get(Uri.parse('https://dongsan.club/items'));
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    List<Item> items = [];
+    List<dynamic> itemsJson = jsonDecode(response.body);
+    itemsJson.forEach(
+      (oneItem) {
+        Item item = Item.fromJson(oneItem);
+        items.add(item);
+      },
+    );
+    return items;
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  }
+}
+
+launchURL(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url, forceWebView: true);
+  } else {
+    throw 'Could not launch $url';
+  }
 }
 
 class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
@@ -50,22 +83,24 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 children: <Widget>[
                   appBar(),
                   Expanded(
-                    child: FutureBuilder<bool>(
-                      future: getData(),
-                      builder:
-                          (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                    child: FutureBuilder<List<Item>>(
+                      future: fetchItems(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<List<Item>> snapshot) {
                         if (!snapshot.hasData) {
                           return const SizedBox();
                         } else {
+                          List<Item>? resData = snapshot.data;
                           return GridView(
                             padding: const EdgeInsets.only(
                                 top: 0, left: 12, right: 12),
                             physics: const BouncingScrollPhysics(),
                             scrollDirection: Axis.vertical,
                             children: List<Widget>.generate(
-                              homeList.length,
+                              resData != null ? resData.length : 0,
                               (int index) {
-                                final int count = homeList.length;
+                                final int count =
+                                    resData != null ? resData.length : 0;
                                 final Animation<double> animation =
                                     Tween<double>(begin: 0.0, end: 1.0).animate(
                                   CurvedAnimation(
@@ -78,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                 return HomeListView(
                                   animation: animation,
                                   animationController: animationController,
-                                  listData: homeList[index],
+                                  listData: resData![index],
                                   callBack: () {
                                     Navigator.push<dynamic>(
                                       context,
@@ -179,7 +214,7 @@ class HomeListView extends StatelessWidget {
       this.animation})
       : super(key: key);
 
-  final HomeList? listData;
+  final Item? listData;
   final VoidCallback? callBack;
   final AnimationController? animationController;
   final Animation<double>? animation;
@@ -202,8 +237,8 @@ class HomeListView extends StatelessWidget {
                   alignment: AlignmentDirectional.center,
                   children: <Widget>[
                     Positioned.fill(
-                      child: Image.asset(
-                        listData!.imagePath,
+                      child: Image.network(
+                        listData!.imageUrl,
                         fit: BoxFit.cover,
                       ),
                     ),

@@ -32,27 +32,27 @@ class _HomeDrawerState extends State<HomeDrawer> {
         labelName: 'Home',
         icon: Icon(Icons.home),
       ),
-      DrawerList(
-        index: DrawerIndex.Help,
-        labelName: 'Help',
-        isAssetsImage: true,
-        imageName: 'assets/images/supportIcon.png',
-      ),
-      DrawerList(
-        index: DrawerIndex.FeedBack,
-        labelName: 'FeedBack',
-        icon: Icon(Icons.help),
-      ),
-      DrawerList(
-        index: DrawerIndex.Invite,
-        labelName: 'Invite Friend',
-        icon: Icon(Icons.group),
-      ),
-      DrawerList(
-        index: DrawerIndex.Share,
-        labelName: 'Rate the app',
-        icon: Icon(Icons.share),
-      ),
+      // DrawerList(
+      //   index: DrawerIndex.Help,
+      //   labelName: 'Help',
+      //   isAssetsImage: true,
+      //   imageName: 'assets/images/supportIcon.png',
+      // ),
+      // DrawerList(
+      //   index: DrawerIndex.FeedBack,
+      //   labelName: 'FeedBack',
+      //   icon: Icon(Icons.help),
+      // ),
+      // DrawerList(
+      //   index: DrawerIndex.Invite,
+      //   labelName: 'Invite Friend',
+      //   icon: Icon(Icons.group),
+      // ),
+      // DrawerList(
+      //   index: DrawerIndex.Share,
+      //   labelName: 'Rate the app',
+      //   icon: Icon(Icons.share),
+      // ),
       DrawerList(
         index: DrawerIndex.About,
         labelName: 'About Us',
@@ -107,7 +107,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                             child: ClipRRect(
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(60.0)),
-                              child: Image.asset('assets/images/userImage.png'),
+                              child: Image.asset('assets/images/helpImage.png'),
                             ),
                           ),
                         ),
@@ -116,8 +116,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 8, left: 4),
-                    child: Text(
-                      'Chris Hemsworth',
+                    child: const Text(
+                      'Vagazine',
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         color: AppTheme.grey,
@@ -150,32 +150,32 @@ class _HomeDrawerState extends State<HomeDrawer> {
             height: 1,
             color: AppTheme.grey.withOpacity(0.6),
           ),
-          Column(
-            children: <Widget>[
-              ListTile(
-                title: Text(
-                  'Sign Out',
-                  style: TextStyle(
-                    fontFamily: AppTheme.fontName,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
-                    color: AppTheme.darkText,
-                  ),
-                  textAlign: TextAlign.left,
-                ),
-                trailing: Icon(
-                  Icons.power_settings_new,
-                  color: Colors.red,
-                ),
-                onTap: () {
-                  onTapped();
-                },
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).padding.bottom,
-              )
-            ],
-          ),
+          // Column(
+          //   children: <Widget>[
+          //     ListTile(
+          //       title: Text(
+          //         'Sign Out',
+          //         style: TextStyle(
+          //           fontFamily: AppTheme.fontName,
+          //           fontWeight: FontWeight.w600,
+          //           fontSize: 16,
+          //           color: AppTheme.darkText,
+          //         ),
+          //         textAlign: TextAlign.left,
+          //       ),
+          //       trailing: Icon(
+          //         Icons.power_settings_new,
+          //         color: Colors.red,
+          //       ),
+          //       onTap: () {
+          //         onTapped();
+          //       },
+          //     ),
+          //     SizedBox(
+          //       height: MediaQuery.of(context).padding.bottom,
+          //     )
+          //   ],
+          // ),
         ],
       ),
     );
