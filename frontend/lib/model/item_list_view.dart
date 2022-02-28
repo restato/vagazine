@@ -81,7 +81,7 @@ class ItemListView extends StatelessWidget {
                                               textAlign: TextAlign.left,
                                               style: TextStyle(
                                                 fontWeight: FontWeight.w600,
-                                                fontSize: 22,
+                                                fontSize: 16,
                                               ),
                                             ),
                                             Row(
