@@ -64,43 +64,43 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   children: <Widget>[
                     getAppBarUI(),
                     Expanded(
-                      // child: Container(
-                      //   color:
-                      //       VagazineAppTheme.buildLightTheme().backgroundColor,
-                      //   child: FutureBuilder<List<ItemListData>>(
-                      //       future: fetchItems(),
-                      //       builder: (context, snapshot) {
-                      //         return getListView(snapshot);
-                      //       }),
-                      // ),
-
                       child: Container(
                         color:
                             VagazineAppTheme.buildLightTheme().backgroundColor,
-                        child: ListView.builder(
-                          itemCount: itemList.length,
-                          padding: const EdgeInsets.only(top: 8),
-                          scrollDirection: Axis.vertical,
-                          itemBuilder: (BuildContext context, int index) {
-                            final int count =
-                                itemList.length > 10 ? 10 : itemList.length;
-                            final Animation<double> animation =
-                                Tween<double>(begin: 0.0, end: 1.0).animate(
-                                    CurvedAnimation(
-                                        parent: animationController!,
-                                        curve: Interval(
-                                            (1 / count) * index, 1.0,
-                                            curve: Curves.fastOutSlowIn)));
-                            animationController?.forward();
-                            return ItemListView(
-                              callback: () {},
-                              itemData: itemList[index],
-                              animation: animation,
-                              animationController: animationController!,
-                            );
-                          },
-                        ),
+                        child: FutureBuilder<List<ItemListData>>(
+                            future: fetchItems(),
+                            builder: (context, snapshot) {
+                              return getListView(snapshot);
+                            }),
                       ),
+
+                      // child: Container(
+                      //   color:
+                      //       VagazineAppTheme.buildLightTheme().backgroundColor,
+                      //   child: ListView.builder(
+                      //     itemCount: itemList.length,
+                      //     padding: const EdgeInsets.only(top: 8),
+                      //     scrollDirection: Axis.vertical,
+                      //     itemBuilder: (BuildContext context, int index) {
+                      //       final int count =
+                      //           itemList.length > 10 ? 10 : itemList.length;
+                      //       final Animation<double> animation =
+                      //           Tween<double>(begin: 0.0, end: 1.0).animate(
+                      //               CurvedAnimation(
+                      //                   parent: animationController!,
+                      //                   curve: Interval(
+                      //                       (1 / count) * index, 1.0,
+                      //                       curve: Curves.fastOutSlowIn)));
+                      //       animationController?.forward();
+                      //       return ItemListView(
+                      //         callback: () {},
+                      //         itemData: itemList[index],
+                      //         animation: animation,
+                      //         animationController: animationController!,
+                      //       );
+                      //     },
+                      //   ),
+                      // ),
                     ),
                   ],
                 ),
@@ -175,7 +175,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
                       return ItemListView(
                         callback: () {},
-                        itemData: itemList[index],
+                        itemData: itemList[0],
                         animation: animation,
                         animationController: animationController!,
                       );
@@ -204,7 +204,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           padding: const EdgeInsets.only(top: 8),
           scrollDirection: Axis.vertical,
           itemBuilder: (BuildContext context, int index) {
-            final int count = itemList.length > 10 ? 10 : itemList.length;
+            final int count = resData!.length > 10 ? 10 : resData.length;
             final Animation<double> animation =
                 Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
                     parent: animationController!,
@@ -213,7 +213,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             animationController?.forward();
             return ItemListView(
               callback: () {},
-              itemData: itemList[index],
+              itemData: resData[index],
               animation: animation,
               animationController: animationController!,
             );
