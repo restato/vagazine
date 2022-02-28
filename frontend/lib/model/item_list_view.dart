@@ -100,13 +100,13 @@ class ItemListView extends StatelessWidget {
                                                 const SizedBox(
                                                   width: 4,
                                                 ),
-                                                Icon(
-                                                  FontAwesomeIcons.mapMarkerAlt,
-                                                  size: 12,
-                                                  color: HotelAppTheme
-                                                          .buildLightTheme()
-                                                      .primaryColor,
-                                                ),
+                                                // Icon(
+                                                //   FontAwesomeIcons.mapMarkerAlt,
+                                                //   size: 12,
+                                                //   color: HotelAppTheme
+                                                //           .buildLightTheme()
+                                                //       .primaryColor,
+                                                // ),
                                                 // Expanded(
                                                 //   child: Text(
                                                 //     '${hotelData!.dist.toStringAsFixed(1)} km to city',
@@ -191,13 +191,13 @@ class ItemListView extends StatelessWidget {
                                         //     fontSize: 22,
                                         //   ),
                                         // ),
-                                        Text(
-                                          '/per night',
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              color:
-                                                  Colors.grey.withOpacity(0.8)),
-                                        ),
+                                        // Text(
+                                        //   '/per night',
+                                        //   style: TextStyle(
+                                        //       fontSize: 14,
+                                        //       color:
+                                        //           Colors.grey.withOpacity(0.8)),
+                                        // ),
                                       ],
                                     ),
                                   ),
