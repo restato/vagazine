@@ -376,14 +376,15 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 // }
 
 Future<List<ItemListData>> fetchItems() async {
-  final response = await http.get(Uri.parse('https://dongsan.club/items'));
+  // final response = await http.get(Uri.parse('https://dongsan.club/items'));
+  final response = await http.get(Uri.parse('http://localhost:8000/items'));
   developer.log('$response');
-  developer.log('fetchItems');
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
     // then parse the JSON.
     List<ItemListData> items = [];
-    List<dynamic> itemsJson = jsonDecode(response.body);
+    developer.log('$response.body');
+    List<dynamic> itemsJson = jsonDecode(utf8.decode(response.bodyBytes));
     itemsJson.forEach(
       (oneItem) {
         ItemListData item = ItemListData.fromJson(oneItem);
