@@ -1,8 +1,11 @@
 import 'package:frontend/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:frontend/model/item_list_data.dart';
+import 'package:frontend/vagazine/grid_list.dart';
+import 'dart:developer' as developer;
 
 class ItemListView extends StatelessWidget {
   const ItemListView(
@@ -75,15 +78,35 @@ class ItemListView extends StatelessWidget {
                                               MainAxisAlignment.center,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
+                                          // title
                                           children: <Widget>[
-                                            Text(
-                                              itemData!.desc,
-                                              textAlign: TextAlign.left,
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 16,
-                                              ),
-                                            ),
+                                            Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: <Widget>[
+                                                  Text(
+                                                    itemData!.title,
+                                                    textAlign: TextAlign.left,
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 16,
+                                                    ),
+                                                  )
+                                                ]),
+                                            // desc
+                                            Row(children: <Widget>[
+                                              Text(itemData!.desc,
+                                                  textAlign: TextAlign.left,
+                                                  style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                    fontSize: 11,
+                                                  ))
+                                            ]),
+                                            // price
                                             Row(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
@@ -97,78 +120,98 @@ class ItemListView extends StatelessWidget {
                                                       color: Colors.grey
                                                           .withOpacity(0.8)),
                                                 ),
-                                                const SizedBox(
-                                                  width: 4,
+                                                TextButton(
+                                                  // style: TextButton
+                                                  //     .styleFrom(
+                                                  //   padding:
+                                                  //       const EdgeInsets
+                                                  //           .all(0.0),
+                                                  //   textStyle:
+                                                  //       const TextStyle(
+                                                  //           fontSize: 20),
+                                                  // ),
+                                                  onPressed: () {
+                                                    launchURL(itemData!.url);
+                                                  },
+                                                  child: const Text('구매하기'),
                                                 ),
-                                                // Icon(
-                                                //   FontAwesomeIcons.mapMarkerAlt,
-                                                //   size: 12,
-                                                //   color: HotelAppTheme
-                                                //           .buildLightTheme()
-                                                //       .primaryColor,
-                                                // ),
                                                 // Expanded(
                                                 //   child: Text(
                                                 //     '${hotelData!.dist.toStringAsFixed(1)} km to city',
-                                                //     overflow:
-                                                //         TextOverflow.ellipsis,
+                                                //     overflow: TextOverflow
+                                                //         .ellipsis,
                                                 //     style: TextStyle(
                                                 //         fontSize: 14,
                                                 //         color: Colors.grey
-                                                //             .withOpacity(0.8)),
+                                                //             .withOpacity(
+                                                //                 0.8)),
                                                 //   ),
                                                 // ),
                                               ],
                                             ),
-                                            // Padding(
-                                            //   padding:
-                                            //       const EdgeInsets.only(top: 4),
-                                            //   child: Row(
-                                            //     children: <Widget>[
-                                            //       RatingBar(
-                                            //         initialRating:
-                                            //             hotelData!.rating,
-                                            //         direction: Axis.horizontal,
-                                            //         allowHalfRating: true,
-                                            //         itemCount: 5,
-                                            //         itemSize: 24,
-                                            //         ratingWidget: RatingWidget(
-                                            //           full: Icon(
-                                            //             Icons.star_rate_rounded,
-                                            //             color: HotelAppTheme
-                                            //                     .buildLightTheme()
-                                            //                 .primaryColor,
-                                            //           ),
-                                            //           half: Icon(
-                                            //             Icons.star_half_rounded,
-                                            //             color: HotelAppTheme
-                                            //                     .buildLightTheme()
-                                            //                 .primaryColor,
-                                            //           ),
-                                            //           empty: Icon(
-                                            //             Icons
-                                            //                 .star_border_rounded,
-                                            //             color: HotelAppTheme
-                                            //                     .buildLightTheme()
-                                            //                 .primaryColor,
-                                            //           ),
-                                            //         ),
-                                            //         itemPadding:
-                                            //             EdgeInsets.zero,
-                                            //         onRatingUpdate: (rating) {
-                                            //           print(rating);
-                                            //         },
-                                            //       ),
-                                            //       Text(
-                                            //         ' ${hotelData!.reviews} Reviews',
-                                            //         style: TextStyle(
-                                            //             fontSize: 14,
-                                            //             color: Colors.grey
-                                            //                 .withOpacity(0.8)),
-                                            //       ),
-                                            //     ],
-                                            //   ),
-                                            // ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.only(top: 4),
+                                              child: Row(
+                                                children: <Widget>[
+                                                  // RatingBar(
+                                                  //   initialRating: 5,
+                                                  //   direction:
+                                                  //       Axis.horizontal,
+                                                  //   allowHalfRating: true,
+                                                  //   itemCount: 5,
+                                                  //   itemSize: 24,
+                                                  //   ratingWidget:
+                                                  //       RatingWidget(
+                                                  //     full: Icon(
+                                                  //       Icons
+                                                  //           .star_rate_rounded,
+                                                  //       color: HotelAppTheme
+                                                  //               .buildLightTheme()
+                                                  //           .primaryColor,
+                                                  //     ),
+                                                  //     half: Icon(
+                                                  //       Icons
+                                                  //           .star_half_rounded,
+                                                  //       color: HotelAppTheme
+                                                  //               .buildLightTheme()
+                                                  //           .primaryColor,
+                                                  //     ),
+                                                  //     empty: Icon(
+                                                  //       Icons
+                                                  //           .star_border_rounded,
+                                                  //       color: HotelAppTheme
+                                                  //               .buildLightTheme()
+                                                  //           .primaryColor,
+                                                  //     ),
+                                                  //   ),
+                                                  //   itemPadding:
+                                                  //       EdgeInsets.zero,
+                                                  //   onRatingUpdate:
+                                                  //       (rating) {
+                                                  //     print(rating);
+                                                  //   },
+                                                  // ),
+                                                  // TextButton(
+                                                  //   // style: TextButton
+                                                  //   //     .styleFrom(
+                                                  //   //   padding:
+                                                  //   //       const EdgeInsets
+                                                  //   //           .all(0.0),
+                                                  //   //   textStyle:
+                                                  //   //       const TextStyle(
+                                                  //   //           fontSize: 20),
+                                                  //   // ),
+                                                  //   onPressed: () {
+                                                  //     launchURL(
+                                                  //         itemData!.url);
+                                                  //   },
+                                                  //   child:
+                                                  //       const Text('구매하기'),
+                                                  // ),
+                                                ],
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -206,27 +249,27 @@ class ItemListView extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Positioned(
-                          top: 8,
-                          right: 8,
-                          child: Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(32.0),
-                              ),
-                              onTap: () {},
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Icon(
-                                  Icons.favorite_border,
-                                  color: HotelAppTheme.buildLightTheme()
-                                      .primaryColor,
-                                ),
-                              ),
-                            ),
-                          ),
-                        )
+                        // Positioned(
+                        //   top: 8,
+                        //   right: 8,
+                        //   child: Material(
+                        //     color: Colors.transparent,
+                        //     child: InkWell(
+                        //       borderRadius: const BorderRadius.all(
+                        //         Radius.circular(32.0),
+                        //       ),
+                        //       onTap: () {},
+                        //       child: Padding(
+                        //         padding: const EdgeInsets.all(8.0),
+                        //         child: Icon(
+                        //           Icons.favorite_border,
+                        //           color: HotelAppTheme.buildLightTheme()
+                        //               .primaryColor,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // )
                       ],
                     ),
                   ),
@@ -237,5 +280,13 @@ class ItemListView extends StatelessWidget {
         );
       },
     );
+  }
+}
+
+launchURL(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url, forceWebView: true);
+  } else {
+    throw 'Could not launch $url';
   }
 }

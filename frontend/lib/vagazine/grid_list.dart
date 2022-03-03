@@ -28,6 +28,7 @@ Future<List<Item>> fetchItems() async {
 }
 
 launchURL(String url) async {
+  print(url);
   if (await canLaunch(url)) {
     await launch(url, forceWebView: true);
   } else {

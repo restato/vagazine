@@ -211,12 +211,16 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     curve: Interval((1 / count) * index, 1.0,
                         curve: Curves.fastOutSlowIn)));
             animationController?.forward();
-            return ItemListView(
-              callback: () {},
-              itemData: resData[index],
-              animation: animation,
-              animationController: animationController!,
-            );
+            return GestureDetector(
+                onTap: () {
+                  launchURL(resData[index].url);
+                },
+                child: ItemListView(
+                  callback: () {},
+                  itemData: resData[index],
+                  animation: animation,
+                  animationController: animationController!,
+                ));
           });
     } else if (snapshot.hasError) {
       return Text('${snapshot.error}');
@@ -376,14 +380,14 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 // }
 
 Future<List<ItemListData>> fetchItems() async {
-  // final response = await http.get(Uri.parse('https://dongsan.club/items'));
-  final response = await http.get(Uri.parse('http://localhost:8000/items'));
-  developer.log('$response');
+  final response = await http.get(Uri.parse('https://dongsan.club/items'));
+  // final response = await http.get(Uri.parse('http://localhost:8000/items'));
+  // developer.log('$response');
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
     // then parse the JSON.
     List<ItemListData> items = [];
-    developer.log('$response.body');
+    // developer.log('$response.body');
     List<dynamic> itemsJson = jsonDecode(utf8.decode(response.bodyBytes));
     itemsJson.forEach(
       (oneItem) {
@@ -391,7 +395,6 @@ Future<List<ItemListData>> fetchItems() async {
         items.add(item);
       },
     );
-    developer.log('$items');
     return items;
   } else {
     // If the server did not return a 200 OK response,
@@ -401,6 +404,7 @@ Future<List<ItemListData>> fetchItems() async {
 }
 
 launchURL(String url) async {
+  developer.log("$url");
   if (await canLaunch(url)) {
     await launch(url, forceWebView: true);
   } else {
