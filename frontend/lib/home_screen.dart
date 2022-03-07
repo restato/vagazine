@@ -70,7 +70,12 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         child: FutureBuilder<List<ItemListData>>(
                             future: fetchItems(),
                             builder: (context, snapshot) {
-                              return getListView(snapshot);
+                              if (!snapshot.hasData) {
+                                return Center(
+                                    child: CircularProgressIndicator());
+                              } else {
+                                return getListView(snapshot);
+                              }
                             }),
                       ),
 
@@ -191,11 +196,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   }
 
   Widget getListView(AsyncSnapshot snapshot) {
-    developer.log('getListView');
-    developer.log('$snapshot');
-    developer.log('$snapshot.hasData');
-    developer.log('$snapshot.hasError');
-    developer.log('$snapshot.error');
     if (snapshot.hasData) {
       developer.log('$snapshot.data');
       List<ItemListData>? resData = snapshot.data;
@@ -224,8 +224,9 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           });
     } else if (snapshot.hasError) {
       return Text('${snapshot.error}');
+    } else {
+      return Text('gg');
     }
-    return const CircularProgressIndicator();
   }
 
   Widget getAppBarUI() {
@@ -380,8 +381,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 // }
 
 Future<List<ItemListData>> fetchItems() async {
-  final response = await http.get(Uri.parse('https://dongsan.club/items'));
-  // final response = await http.get(Uri.parse('http://localhost:8000/items'));
+  // final response = await http.get(Uri.parse('https://dongsan.club/items'));
+  final response = await http.get(Uri.parse('http://localhost:8000/items'));
   // developer.log('$response');
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
