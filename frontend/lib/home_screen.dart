@@ -381,8 +381,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 // }
 
 Future<List<ItemListData>> fetchItems() async {
-  // final response = await http.get(Uri.parse('https://dongsan.club/items'));
-  final response = await http.get(Uri.parse('http://localhost:8000/items'));
+  final response = await http.get(Uri.parse('https://dongsan.club/items'));
+  // final response = await http.get(Uri.parse('http://localhost:8000/items'));
   // developer.log('$response');
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
