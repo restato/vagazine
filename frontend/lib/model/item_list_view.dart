@@ -284,20 +284,27 @@ Widget getBottomView(context, itemData) {
           builder: (BuildContext context) => AlertDialog(
             title: Text(itemData!.title,
                 style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
-            content: Column(children: <Widget>[
-              AspectRatio(
-                aspectRatio: 2,
-                child: Image.network(
-                  itemData!.imageUrl,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text(itemData!.desc,
-                      style: TextStyle(
-                          fontSize: 11, fontWeight: FontWeight.normal))),
-            ]),
+            content: Container(
+                child: SingleChildScrollView(
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                  AspectRatio(
+                    aspectRatio: 2,
+                    child: Image.network(
+                      itemData!.imageUrl,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: Text(itemData!.desc,
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.normal,
+                              decoration: TextDecoration.none))),
+                ]))),
             actions: <Widget>[
               // TextButton(
               //   onPressed: () => Navigator.pop(context, 'Cancel'),
