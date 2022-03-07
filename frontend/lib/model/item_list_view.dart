@@ -92,13 +92,16 @@ class ItemListView extends StatelessWidget {
                                                     style: TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      fontSize: 16,
+                                                      fontSize: 15,
                                                     ),
                                                   )
                                                 ]),
                                             // desc
                                             Row(children: <Widget>[
-                                              Text(itemData!.desc,
+                                              Text(
+                                                  itemData!.desc
+                                                          .substring(0, 50) +
+                                                      "...",
                                                   textAlign: TextAlign.left,
                                                   style: TextStyle(
                                                     fontWeight:
@@ -107,48 +110,7 @@ class ItemListView extends StatelessWidget {
                                                   ))
                                             ]),
                                             // price
-                                            Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: <Widget>[
-                                                Text(
-                                                  itemData!.price,
-                                                  style: TextStyle(
-                                                      fontSize: 14,
-                                                      color: Colors.grey
-                                                          .withOpacity(0.8)),
-                                                ),
-                                                TextButton(
-                                                  // style: TextButton
-                                                  //     .styleFrom(
-                                                  //   padding:
-                                                  //       const EdgeInsets
-                                                  //           .all(0.0),
-                                                  //   textStyle:
-                                                  //       const TextStyle(
-                                                  //           fontSize: 20),
-                                                  // ),
-                                                  onPressed: () {
-                                                    launchURL(itemData!.url);
-                                                  },
-                                                  child: const Text('구매하기'),
-                                                ),
-                                                // Expanded(
-                                                //   child: Text(
-                                                //     '${hotelData!.dist.toStringAsFixed(1)} km to city',
-                                                //     overflow: TextOverflow
-                                                //         .ellipsis,
-                                                //     style: TextStyle(
-                                                //         fontSize: 14,
-                                                //         color: Colors.grey
-                                                //             .withOpacity(
-                                                //                 0.8)),
-                                                //   ),
-                                                // ),
-                                              ],
-                                            ),
+                                            getBottomView(context, itemData),
                                             Padding(
                                               padding:
                                                   const EdgeInsets.only(top: 4),
@@ -281,6 +243,90 @@ class ItemListView extends StatelessWidget {
       },
     );
   }
+}
+
+Widget getBottomView(context, itemData) {
+  return Row(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: <Widget>[
+      Text(
+        itemData!.price,
+        style: TextStyle(fontSize: 14, color: Colors.grey.withOpacity(0.8)),
+      ),
+      TextButton(
+        // style: TextButton
+        //     .styleFrom(
+        //   padding:
+        //       const EdgeInsets
+        //           .all(0.0),
+        //   textStyle:
+        //       const TextStyle(
+        //           fontSize: 20),
+        // ),
+        onPressed: () {
+          launchURL(itemData!.url);
+        },
+        child: const Text('구매하기'),
+      ),
+      TextButton(
+        // style: TextButton
+        //     .styleFrom(
+        //   padding:
+        //       const EdgeInsets
+        //           .all(0.0),
+        //   textStyle:
+        //       const TextStyle(
+        //           fontSize: 20),
+        // ),
+        onPressed: () => showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+            title: Text(itemData!.title,
+                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+            content: Column(children: <Widget>[
+              AspectRatio(
+                aspectRatio: 2,
+                child: Image.network(
+                  itemData!.imageUrl,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Text(itemData!.desc,
+                      style: TextStyle(
+                          fontSize: 11, fontWeight: FontWeight.normal))),
+            ]),
+            actions: <Widget>[
+              // TextButton(
+              //   onPressed: () => Navigator.pop(context, 'Cancel'),
+              //   child: const Text('Cancel'),
+              // ),
+              TextButton(
+                onPressed: () => Navigator.pop(context, 'OK'),
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        ),
+        // launchURL(itemData!.url);
+        child: const Text('자세히'),
+      ),
+      // Expanded(
+      //   child: Text(
+      //     '${hotelData!.dist.toStringAsFixed(1)} km to city',
+      //     overflow: TextOverflow
+      //         .ellipsis,
+      //     style: TextStyle(
+      //         fontSize: 14,
+      //         color: Colors.grey
+      //             .withOpacity(
+      //                 0.8)),
+      //   ),
+      // ),
+    ],
+  );
 }
 
 launchURL(String url) async {
