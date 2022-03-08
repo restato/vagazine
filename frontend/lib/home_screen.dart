@@ -45,7 +45,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    developer.log('build');
     return Theme(
       data: VagazineAppTheme.buildLightTheme(),
       child: Container(

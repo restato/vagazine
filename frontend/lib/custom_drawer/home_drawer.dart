@@ -29,8 +29,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
     drawerList = <DrawerList>[
       DrawerList(
         index: DrawerIndex.HOME,
-        labelName: 'Home',
-        icon: Icon(Icons.home),
+        labelName: '이유식편',
+        icon: Icon(Icons.child_care_rounded),
       ),
       // DrawerList(
       //   index: DrawerIndex.Help,
@@ -55,7 +55,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
       // ),
       DrawerList(
         index: DrawerIndex.About,
-        labelName: 'About Us',
+        labelName: 'About Vagazine',
         icon: Icon(Icons.info),
       ),
     ];
@@ -78,42 +78,42 @@ class _HomeDrawerState extends State<HomeDrawer> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  AnimatedBuilder(
-                    animation: widget.iconAnimationController!,
-                    builder: (BuildContext context, Widget? child) {
-                      return ScaleTransition(
-                        scale: AlwaysStoppedAnimation<double>(1.0 -
-                            (widget.iconAnimationController!.value) * 0.2),
-                        child: RotationTransition(
-                          turns: AlwaysStoppedAnimation<double>(Tween<double>(
-                                      begin: 0.0, end: 24.0)
-                                  .animate(CurvedAnimation(
-                                      parent: widget.iconAnimationController!,
-                                      curve: Curves.fastOutSlowIn))
-                                  .value /
-                              360),
-                          child: Container(
-                            height: 120,
-                            width: 120,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              boxShadow: <BoxShadow>[
-                                BoxShadow(
-                                    color: AppTheme.grey.withOpacity(0.6),
-                                    offset: const Offset(2.0, 4.0),
-                                    blurRadius: 8),
-                              ],
-                            ),
-                            child: ClipRRect(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(60.0)),
-                              child: Image.asset('assets/images/helpImage.png'),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                  // AnimatedBuilder(
+                  //   animation: widget.iconAnimationController!,
+                  //   builder: (BuildContext context, Widget? child) {
+                  //     return ScaleTransition(
+                  //       scale: AlwaysStoppedAnimation<double>(1.0 -
+                  //           (widget.iconAnimationController!.value) * 0.2),
+                  //       child: RotationTransition(
+                  //         turns: AlwaysStoppedAnimation<double>(Tween<double>(
+                  //                     begin: 0.0, end: 24.0)
+                  //                 .animate(CurvedAnimation(
+                  //                     parent: widget.iconAnimationController!,
+                  //                     curve: Curves.fastOutSlowIn))
+                  //                 .value /
+                  //             360),
+                  //         child: Container(
+                  //           height: 120,
+                  //           width: 120,
+                  //           decoration: BoxDecoration(
+                  //             shape: BoxShape.circle,
+                  //             boxShadow: <BoxShadow>[
+                  //               BoxShadow(
+                  //                   color: AppTheme.grey.withOpacity(0.6),
+                  //                   offset: const Offset(2.0, 4.0),
+                  //                   blurRadius: 8),
+                  //             ],
+                  //           ),
+                  //           child: ClipRRect(
+                  //             borderRadius:
+                  //                 const BorderRadius.all(Radius.circular(60.0)),
+                  //             child: Image.asset('assets/images/helpImage.png'),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     );
+                  //   },
+                  // ),
                   Padding(
                     padding: const EdgeInsets.only(top: 8, left: 4),
                     child: const Text(

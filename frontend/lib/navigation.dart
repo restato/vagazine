@@ -8,6 +8,7 @@ import 'custom_drawer/drawer_user_controller.dart';
 import 'custom_drawer/home_drawer.dart';
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
+import 'about_screen.dart';
 
 class NavigationHomeScreen extends StatefulWidget {
   @override
@@ -67,6 +68,11 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
       } else if (drawerIndex == DrawerIndex.Invite) {
         setState(() {
           // screenView = InviteFriend();
+        });
+      } else if (drawerIndex == DrawerIndex.About) {
+        drawerIndex = drawerIndexdata;
+        setState(() {
+          screenView = const AboutPage();
         });
       } else {
         //do in your way......
