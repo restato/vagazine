@@ -256,7 +256,7 @@ Widget getBottomView(context, itemData) {
     children: <Widget>[
       Text(
         itemData!.price,
-        style: TextStyle(fontSize: 14, color: Colors.grey.withOpacity(0.8)),
+        style: TextStyle(fontSize: 14, color: Colors.black87),
       ),
       TextButton(
         // style: TextButton
