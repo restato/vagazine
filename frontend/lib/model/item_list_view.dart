@@ -279,44 +279,9 @@ Widget getBottomView(context, itemData) {
         //       const TextStyle(
         //           fontSize: 20),
         // ),
-        onPressed: () => showDialog<String>(
-          context: context,
-          builder: (BuildContext context) => AlertDialog(
-            title: Text(itemData!.title,
-                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
-            content: Container(
-                child: SingleChildScrollView(
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                  AspectRatio(
-                    aspectRatio: 2,
-                    child: Image.network(
-                      itemData!.imageUrl,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: Text(itemData!.desc,
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.normal,
-                              decoration: TextDecoration.none))),
-                ]))),
-            actions: <Widget>[
-              // TextButton(
-              //   onPressed: () => Navigator.pop(context, 'Cancel'),
-              //   child: const Text('Cancel'),
-              // ),
-              TextButton(
-                onPressed: () => Navigator.pop(context, 'OK'),
-                child: const Text('OK'),
-              ),
-            ],
-          ),
-        ),
+        onPressed: () {
+          getDialogView(context, itemData);
+        },
         // launchURL(itemData!.url);
         child: const Text('자세히'),
       ),
@@ -334,6 +299,144 @@ Widget getBottomView(context, itemData) {
       // ),
     ],
   );
+}
+
+// Widget openAlertBox(content, itemData) {
+//   return showDialog<String>(
+//           context: context,
+//           builder: (BuildContext context) => AlertDialog(
+//             shape: RoundedRectangleBorder(
+//                 borderRadius: BorderRadius.all(Radius.circular(20.0))),
+//             contentPadding: EdgeInsets.only(top: 10),
+//             title: Text(itemData!.title,
+//                 style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+//             content: Container(
+//                 width: 300.0,
+//                 child: Column(
+//                     mainAxisAlignment: MainAxisAlignment.center,
+//                     crossAxisAlignment: CrossAxisAlignment.center,
+//                     children: <Widget>[
+//                       AspectRatio(
+//                         aspectRatio: 2,
+//                         child: Image.network(
+//                           itemData!.imageUrl,
+//                           fit: BoxFit.cover,
+//                         ),
+//                       ),
+//                       Padding(
+//                           padding: EdgeInsets.all(5.0),
+//                           child: Text(itemData!.price,
+//                               style: TextStyle(
+//                                   fontSize: 12,
+//                                   fontWeight: FontWeight.normal,
+//                                   decoration: TextDecoration.none))),
+//                       SingleChildScrollView(
+//                           child: Padding(
+//                               padding: EdgeInsets.all(5.0),
+//                               child: Text(itemData!.desc,
+//                                   style: TextStyle(
+//                                       fontSize: 12,
+//                                       fontWeight: FontWeight.normal,
+//                                       decoration: TextDecoration.none)))),
+//                       InkWell(
+//                         child: Container(
+//                           padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+//                           decoration: BoxDecoration(
+//                             borderRadius: BorderRadius.only(
+//                                 bottomLeft: Radius.circular(32.0),
+//                                 bottomRight: Radius.circular(32.0)),
+//                           ),
+//                           child: Text(
+//                             "Rate Product",
+//                             style: TextStyle(color: Colors.black),
+//                             textAlign: TextAlign.center,
+//                           ),
+//                         ),
+//                       ),
+//                     ])),
+//             actions: <Widget>[
+//               // TextButton(
+//               //   onPressed: () => Navigator.pop(context, 'Cancel'),
+//               //   child: const Text('Cancel'),
+//               // ),
+//               TextButton(
+//                 onPressed: () => Navigator.pop(context, 'OK'),
+//                 child: const Text('OK'),
+//               ),
+//             ],
+//           ),
+//         )
+// }
+
+Future<bool> getDialogView(context, itemData) async {
+  bool goBack = false;
+  await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(32.0))),
+          contentPadding: EdgeInsets.only(top: 10.0),
+          title: Text(itemData!.title,
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+          content: Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                AspectRatio(
+                  aspectRatio: 2,
+                  child: Image.network(
+                    itemData!.imageUrl,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                SizedBox(
+                  height: 5.0,
+                ),
+                Divider(
+                  color: Colors.grey,
+                  height: 4.0,
+                ),
+                Container(
+                    height: 250,
+                    alignment: Alignment.center,
+                    child: Expanded(
+                        flex: 1,
+                        child: Padding(
+                            padding: EdgeInsets.all(15),
+                            child: SingleChildScrollView(
+                                scrollDirection: Axis.vertical,
+                                child: Text(itemData!.desc,
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.normal,
+                                        decoration: TextDecoration.none)))))),
+                InkWell(
+                  child: Container(
+                    padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                    decoration: BoxDecoration(
+                      color: VagazineAppTheme.buildLightTheme().primaryColor,
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(32.0),
+                          bottomRight: Radius.circular(32.0)),
+                    ),
+                    child: TextButton(
+                        onPressed: () => Navigator.pop(context, '확인'),
+                        child: Text(
+                          "확인",
+                          style: TextStyle(color: Colors.white),
+                          textAlign: TextAlign.center,
+                        )),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      });
+  return goBack;
 }
 
 launchURL(String url) async {
