@@ -1,0 +1,7 @@
+beautifulsoup4==4.10.0
+databases==0.5.5
+fastapi==0.74.1
+fastapi_redis_cache==0.2.5
+pydantic==1.8.2
+requests==2.26.0
+SQLAlchemy==1.4.29

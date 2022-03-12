@@ -26,11 +26,7 @@ RUN useradd -m -s /bin/bash -u $USER_UID $USER_NAME && \
     echo "${USER_NAME} ALL=(ALL) ALL" >> /etc/sudoers
 
 #COPY FastAPI source code etc. into the container
-COPY ./app /app/app
-COPY ./util /app/util
-COPY ./requirements.txt /app/requirements.txt
-COPY ./pyproject.toml /app/pyproject.toml
-
+COPY ./ /app
 
 # set env variables
 # Prevents Python from writing pyc files to disc
@@ -64,4 +60,4 @@ RUN pip install -r requirements.txt
 EXPOSE 8000
 
 # Execute
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0"]

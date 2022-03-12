@@ -7,11 +7,17 @@ services:
       context: ./app
       dockerfile: Dockerfile
     # depends_on:
-    #   - redis
+      # - database
+      # - redis
     volumes:
-      - ./app/app:/app/app
+      - ./app:/app/app
     # of the app container`CMD`To overwrite`command`use
-    command: "uvicorn app.main:app --reload --host 0.0.0.0"
+    # command: "ls -al & uvicorn main:app --reload --host 0.0.0.0"
+    # command: bash -c "ls -alh" 
+    # command: bash -c "uvicorn main:app --reload --host 0.0.0.0"
+    command: bash -c "cd app; uvicorn main:app --reload --host 0.0.0.0"
+    # python wait_for.py && python init_db.py && uvicorn main:app --host 0.0.0.0 --port 8000 --workers $${MAX_WORKERS}"
+    # command: bash -c "python wait_for.py && python init_db.py && uvicorn main:app --host 0.0.0.0 --port 8000 --workers $${MAX_WORKERS}"
     ports:
       - "8000:8000"
     expose:
@@ -40,6 +46,22 @@ services:
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
     networks:
       - nginx_network
+  # database:
+  #   image: "postgres:13.3-alpine"
+  #   container_name: postgres
+  #   restart: unless-stopped
+  #   expose:
+  #     - 5432
+  #   environment:
+  #     - POSTGRES_DB=vagazine
+  #     - POSTGRES_USER=vagazine
+  #     - POSTGRES_PASSWORD=vagazine
+  #   volumes:
+  #     - ./data/postgres:/var/lib/postgresql/data
+  #   ports:
+  #     - "5432:5432"
+  #   networks:
+  #     - nginx_network
   redis:
     image: redis:alpine
     restart: always
