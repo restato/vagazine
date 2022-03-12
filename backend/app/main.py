@@ -34,9 +34,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 @app.get("/ping")
-def ping():
+async def ping():
     return 'pong'
 
 @app.on_event('startup')
