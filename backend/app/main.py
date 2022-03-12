@@ -11,6 +11,7 @@ from config import cfg
 from util import scrap
 from util import misc
 from models import Item
+from database import *
 
 logger = logging.getLogger(__name__)
 app = FastAPI(title='vagazine')
@@ -49,12 +50,13 @@ async def startup():
             ignore_arg_types=[Request, Response, Session]
         )
     # Connect to database
-    # await db.connect()
+    if conn.is_closed():
+        conn.connect()
 
 @app.on_event('shutdown')
 async def shutdown():
-    pass
-    # await db.disconnect()
+    if not conn.is_closed():
+    conn.close()
 
 @app.get("/items")
 @cache(expire=60)
