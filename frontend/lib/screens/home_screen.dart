@@ -1,4 +1,4 @@
-import 'app_theme.dart';
+import '../app_theme.dart';
 import 'package:flutter/material.dart';
 import '../models/item.dart';
 import 'package:http/http.dart' as http;
@@ -6,8 +6,8 @@ import 'dart:convert';
 import 'package:url_launcher/url_launcher.dart';
 // import 'models/hotel_list_data.dart';
 // import 'models/hotel_list_view.dart';
-import 'model/item_list_view.dart';
-import 'model/item_list_data.dart';
+import '../model/item_list_view.dart';
+import '../model/item_list_data.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:developer' as developer;
 
@@ -224,7 +224,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     } else if (snapshot.hasError) {
       return Text('${snapshot.error}');
     } else {
-      return Text('gg');
+      return Text('vagazine88@gmail.com 로 연락주세요.');
     }
   }
 

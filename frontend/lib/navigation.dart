@@ -7,8 +7,8 @@ import 'themes/app_theme.dart';
 import 'custom_drawer/drawer_user_controller.dart';
 import 'custom_drawer/home_drawer.dart';
 import 'package:flutter/material.dart';
-import 'home_screen.dart';
-import 'about_screen.dart';
+import 'screens/home_screen.dart';
+import 'screens/about_screen.dart';
 
 class NavigationHomeScreen extends StatefulWidget {
   @override
@@ -21,8 +21,10 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
 
   @override
   void initState() {
-    drawerIndex = DrawerIndex.HOME;
-    screenView = const MyHomePage();
+    // drawerIndex = DrawerIndex.HOME;
+    // screenView = const MyHomePage();
+    drawerIndex = DrawerIndex.About;
+    screenView = const AboutPage();
     super.initState();
   }
 
