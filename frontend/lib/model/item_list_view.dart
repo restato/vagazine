@@ -406,17 +406,15 @@ Future<bool> getDialogView(context, itemData) async {
                 Container(
                     height: 250,
                     alignment: Alignment.center,
-                    child: Expanded(
-                        flex: 1,
-                        child: Padding(
-                            padding: EdgeInsets.all(15),
-                            child: SingleChildScrollView(
-                                scrollDirection: Axis.vertical,
-                                child: Text(itemData!.desc,
-                                    style: TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.normal,
-                                        decoration: TextDecoration.none)))))),
+                    child: Padding(
+                        padding: EdgeInsets.all(15),
+                        child: SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Text(itemData!.desc,
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.normal,
+                                    decoration: TextDecoration.none))))),
                 InkWell(
                   child: Container(
                     padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
