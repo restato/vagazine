@@ -4,7 +4,7 @@ class ItemListData {
     this.title = '',
     this.desc = '',
     this.url = '',
-    this.price = '80',
+    this.price = '',
     this.imageUrl = '',
   });
 

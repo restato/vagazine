@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../app_theme.dart';
+import 'package:vagazine/app_theme.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -39,7 +39,7 @@ class _AboutPageState extends State<AboutPage> with TickerProviderStateMixin {
                             future: getData(),
                             builder: (context, snapshot) {
                               if (snapshot.hasData) {
-                                return const Text('hi');
+                                return const Text('✉️ direcision@gmail.com');
                                 // return Markdown(data: snapshot.data);
                               }
                               return Center(
