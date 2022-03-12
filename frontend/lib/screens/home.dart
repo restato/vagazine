@@ -219,7 +219,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 }
 
 Future<List<ItemListData>> fetchItems() async {
-  final response = await http.get(Uri.parse('https://dongsan.club/items'));
+  final response = await http.get(Uri.parse('https://dongsan.club/items/'));
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
     // then parse the JSON.
