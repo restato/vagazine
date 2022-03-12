@@ -21,10 +21,10 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
 
   @override
   void initState() {
-    // drawerIndex = DrawerIndex.HOME;
-    // screenView = const MyHomePage();
-    drawerIndex = DrawerIndex.About;
-    screenView = const AboutPage();
+    drawerIndex = DrawerIndex.HOME;
+    screenView = const MyHomePage();
+    // drawerIndex = DrawerIndex.About;
+    // screenView = const AboutPage();
     super.initState();
   }
 
